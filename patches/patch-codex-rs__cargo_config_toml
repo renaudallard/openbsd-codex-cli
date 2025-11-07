@@ -1,0 +1,11 @@
+Index: codex-rs/.cargo/config.toml
+--- codex-rs/.cargo/config.toml.orig
++++ codex-rs/.cargo/config.toml
+@@ -6,3 +6,7 @@ directory = "modcargo-crates"
+ 
+ [patch.crates-io]
+ keyring = { path = "vendor/keyring" }
++ratatui = { path = "vendor/ratatui" }
++
++[patch."https://github.com/rust-lang/crates.io-index"]
++ratatui = { path = "vendor/ratatui" }

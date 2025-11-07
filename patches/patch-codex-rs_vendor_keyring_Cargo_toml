@@ -1,0 +1,12 @@
+Index: codex-rs/vendor/keyring/Cargo.toml
+--- codex-rs/vendor/keyring/Cargo.toml.orig
++++ codex-rs/vendor/keyring/Cargo.toml
+@@ -54,6 +54,8 @@ targets = [
+ ]
+ 
+ [features]
++# OpenBSD-safe default: avoid native backends
++default = ["crypto-rust"]
+ apple-native = ["dep:security-framework"]
+ async-io = ["zbus?/async-io"]
+ async-secret-service = [
