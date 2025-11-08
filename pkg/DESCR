@@ -1,4 +1,4 @@
-Codex CLI is OpenAI’s terminal-based coding agent. It can read, modify,
+Codex CLI is OpenAI's terminal-based coding agent. It can read, modify,
 and run code in a chosen directory and integrates with your workflow.
 
 This port builds the Rust CLI from source (codex-rs) and installs the

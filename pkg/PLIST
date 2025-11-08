@@ -1,3 +1,3 @@
-@comment $OpenBSD$
-bin/codex
+@bin bin/codex
+share/examples/codex/
 share/examples/codex/config.toml

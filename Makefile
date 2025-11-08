@@ -37,28 +37,11 @@ post-extract:
 	${INSTALL_DATA_DIR} ${WRKSRC}/vendor
 	# Copy the ratatui 0.29.0 crate (already in WRKDIR thanks to MODCARGO_CRATES)
 	cp -R ${WRKDIR}/ratatui-0.29.0 ${WRKSRC}/vendor/ratatui
-
-	${INSTALL_DATA_DIR} ${WRKSRC}/.cargo
-	# Keep cargo offline and force our patched ratatui
-	printf '%s\n' \
-	  '[source.crates-io]' \
-	  'replace-with = "vendored-sources"' \
-	  '' \
-	  '[source.vendored-sources]' \
-	  'directory = "modcargo-crates"' \
-	  '' \
-	  '[patch.crates-io]' \
-	  'ratatui = { path = "vendor/ratatui" }' \
-	  '' \
-          '[patch."https://github.com/rust-lang/crates.io-index"]' \
-          'ratatui = { path = "vendor/ratatui" }' \
-	> ${WRKSRC}/.cargo/config.toml
-
-	${INSTALL_DATA_DIR} ${WRKSRC}/vendor
-	# vendor keyring 3.6.3 from WRKDIR (added via MODCARGO_CRATES)
+	# Copy keyring 3.6.3 from WRKDIR (added via MODCARGO_CRATES)
 	cp -R ${WRKDIR}/keyring-3.6.3 ${WRKSRC}/vendor/keyring
 
 	${INSTALL_DATA_DIR} ${WRKSRC}/.cargo
+	# Keep cargo offline and use vendored sources
 	printf '%s\n' \
 	  '[source.crates-io]' \
 	  'replace-with = "vendored-sources"' \
@@ -69,6 +52,7 @@ post-extract:
 	  '[patch.crates-io]' \
 	  'keyring = { path = "vendor/keyring" }' \
 	> ${WRKSRC}/.cargo/config.toml
+
 
 do-install:
 	${INSTALL_PROGRAM} ${WRKBUILD}/target/release/codex ${PREFIX}/bin/codex

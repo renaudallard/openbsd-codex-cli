@@ -1,0 +1,21 @@
+Index: codex-rs/tui/src/terminal_palette.rs
+--- codex-rs/tui/src/terminal_palette.rs.orig
++++ codex-rs/tui/src/terminal_palette.rs
+@@ -47,7 +47,7 @@ pub fn default_bg() -> Option<(u8, u8, u8)> {
+     default_colors().map(|c| c.bg)
+ }
+
+-#[cfg(all(unix, not(test)))]
++#[cfg(all(unix, not(test), not(target_os = "openbsd")))]
+ mod imp {
+     use super::DefaultColors;
+     use crossterm::style::Color as CrosstermColor;
+@@ -121,7 +121,7 @@ mod imp {
+     }
+ }
+
+-#[cfg(not(all(unix, not(test))))]
++#[cfg(any(not(all(unix, not(test))), target_os = "openbsd"))]
+ mod imp {
+     use super::DefaultColors;
+
