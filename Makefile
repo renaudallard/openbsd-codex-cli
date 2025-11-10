@@ -1,5 +1,3 @@
-# $OpenBSD$
-
 COMMENT =        lightweight coding agent that runs in your terminal
 
 # Upstream tag for Rust sources:
@@ -7,8 +5,6 @@ GH_ACCOUNT =     openai
 GH_PROJECT =     codex
 GH_TAGNAME =     rust-v0.55.0
 PKGNAME =	codex-${GH_TAGNAME:S/rust-v//}
-
-#DIST_TUPLE =	github nornagon crossterm 87db8bfa6dc99427fd3b071681b07fc31c6ce995 .
 
 CATEGORIES =     devel
 HOMEPAGE =       https://github.com/openai/codex
