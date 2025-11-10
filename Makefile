@@ -1,33 +1,28 @@
-COMMENT =        lightweight coding agent that runs in your terminal
+COMMENT =	lightweight coding agent that runs in your terminal
 
 # Upstream tag for Rust sources:
-GH_ACCOUNT =     openai
-GH_PROJECT =     codex
-GH_TAGNAME =     rust-v0.55.0
+GH_ACCOUNT =	openai
+GH_PROJECT =	codex
+GH_TAGNAME =	rust-v0.55.0
 PKGNAME =	codex-${GH_TAGNAME:S/rust-v//}
 
-CATEGORIES =     devel
-HOMEPAGE =       https://github.com/openai/codex
+CATEGORIES =	devel
+HOMEPAGE =	https://github.com/openai/codex
 
-PERMIT_PACKAGE = Yes
+PERMIT_PACKAGE =	Yes
 
-MODULES =        devel/cargo
+MODULES =	devel/cargo
 
 # Build from the Rust workspace
-WRKSRC =         ${WRKDIST}/codex-rs
+WRKSRC =	${WRKDIST}/codex-rs
 
-WANTLIB +=       ${MODCARGO_WANTLIB} m
+WANTLIB +=	${MODCARGO_WANTLIB} m
 
-CONFIGURE_STYLE =       cargo
+CONFIGURE_STYLE =	cargo
 
-#MODPY_PYBUILD = poetry-core
-#MODCARGO_BUILD =        Yes
-#MODCARGO_INSTALL =      No
-#MODCARGO_TEST =         No
+MAKE_ENV +=	${MODCARGO_ENV}
 
-MAKE_ENV +=             ${MODCARGO_ENV}
-
-NO_TEST =        Yes
+NO_TEST =	Yes
 
 post-extract:
 	${INSTALL_DATA_DIR} ${WRKSRC}/vendor

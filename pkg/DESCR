@@ -3,5 +3,3 @@ and run code in a chosen directory and integrates with your workflow.
 
 This port builds the Rust CLI from source (codex-rs) and installs the
 `codex` binary.
-
-Homepage: https://github.com/openai/codex
