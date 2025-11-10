@@ -1,0 +1,150 @@
+Index: codex-rs/arg0/src/lib.rs
+--- codex-rs/arg0/src/lib.rs.orig
++++ codex-rs/arg0/src/lib.rs
+@@ -72,6 +72,11 @@
+         std::process::exit(exit_code);
+     }
+ 
++    let (self_exe, self_exe_error) = match resolve_self_exe(argv0.as_os_str()) {
++        Ok(path) => (Some(path), None),
++        Err(err) => (None, Some(err)),
++    };
++
+     // This modifies the environment, which is not thread-safe, so do this
+     // before creating any threads/the Tokio runtime.
+     load_dotenv();
+@@ -79,12 +84,22 @@
+     // Retain the TempDir so it exists for the lifetime of the invocation of
+     // this executable. Admittedly, we could invoke `keep()` on it, but it
+     // would be nice to avoid leaving temporary directories behind, if possible.
+-    let _path_entry = match prepend_path_entry_for_apply_patch() {
+-        Ok(path_entry) => Some(path_entry),
+-        Err(err) => {
+-            // It is possible that Codex will proceed successfully even if
+-            // updating the PATH fails, so warn the user and move on.
+-            eprintln!("WARNING: proceeding, even though we could not update PATH: {err}");
++    let _path_entry = match self_exe.as_ref() {
++        Some(exe) => match prepend_path_entry_for_apply_patch(exe) {
++            Ok(path_entry) => Some(path_entry),
++            Err(err) => {
++                // It is possible that Codex will proceed successfully even if
++                // updating the PATH fails, so warn the user and move on.
++                eprintln!("WARNING: proceeding, even though we could not update PATH: {err}");
++                None
++            }
++        },
++        None => {
++            if let Some(err) = &self_exe_error {
++                eprintln!(
++                    "WARNING: proceeding, even though we could not determine the Codex executable path: {err}"
++                );
++            }
+             None
+         }
+     };
+@@ -94,7 +109,7 @@
+     let runtime = tokio::runtime::Runtime::new()?;
+     runtime.block_on(async move {
+         let codex_linux_sandbox_exe: Option<PathBuf> = if cfg!(target_os = "linux") {
+-            std::env::current_exe().ok()
++            self_exe.clone()
+         } else {
+             None
+         };
+@@ -144,17 +159,15 @@
+ ///
+ /// IMPORTANT: This function modifies the PATH environment variable, so it MUST
+ /// be called before multiple threads are spawned.
+-fn prepend_path_entry_for_apply_patch() -> std::io::Result<TempDir> {
++fn prepend_path_entry_for_apply_patch(exe: &Path) -> std::io::Result<TempDir> {
+     let temp_dir = TempDir::new()?;
+     let path = temp_dir.path();
+ 
+     for filename in &[APPLY_PATCH_ARG0, MISSPELLED_APPLY_PATCH_ARG0] {
+-        let exe = std::env::current_exe()?;
+-
+         #[cfg(unix)]
+         {
+             let link = path.join(filename);
+-            symlink(&exe, &link)?;
++            symlink(exe, &link)?;
+         }
+ 
+         #[cfg(windows)]
+@@ -193,4 +206,75 @@
+     }
+ 
+     Ok(temp_dir)
++}
++
++fn resolve_self_exe(argv0: &std::ffi::OsStr) -> std::io::Result<PathBuf> {
++    #[cfg(unix)]
++    {
++        resolve_self_exe_unix(argv0)
++    }
++    #[cfg(not(unix))]
++    {
++        let _ = argv0;
++        std::env::current_exe()
++    }
++}
++
++#[cfg(unix)]
++fn resolve_self_exe_unix(argv0: &std::ffi::OsStr) -> std::io::Result<PathBuf> {
++    use std::io::{Error, ErrorKind};
++    use std::os::unix::ffi::OsStrExt;
++
++    if argv0.is_empty() {
++        return Err(Error::new(
++            ErrorKind::NotFound,
++            "argv[0] is empty; cannot resolve executable path",
++        ));
++    }
++
++    let candidate = PathBuf::from(argv0);
++    if candidate.is_absolute() {
++        return Ok(candidate);
++    }
++
++    if argv0.as_bytes().contains(&b'/') {
++        return Ok(std::env::current_dir()?.join(candidate));
++    }
++
++    if let Some(paths) = std::env::var_os("PATH") {
++        for dir in std::env::split_paths(&paths) {
++            let dir = if dir.as_os_str().is_empty() {
++                std::env::current_dir()?
++            } else {
++                dir
++            };
++            let resolved = dir.join(&candidate);
++            if is_executable_file(&resolved) {
++                return Ok(resolved);
++            }
++        }
++    } else {
++        let resolved = std::env::current_dir()?.join(&candidate);
++        if is_executable_file(&resolved) {
++            return Ok(resolved);
++        }
++    }
++
++    Err(Error::new(
++        ErrorKind::NotFound,
++        format!(
++            "failed to locate '{}' on PATH; cannot determine executable path",
++            candidate.display()
++        ),
++    ))
++}
++
++#[cfg(unix)]
++fn is_executable_file(path: &Path) -> bool {
++    use std::os::unix::fs::PermissionsExt;
++
++    match std::fs::metadata(path) {
++        Ok(metadata) => metadata.is_file() && metadata.permissions().mode() & 0o111 != 0,
++        Err(_) => false,
++    }
+ }
+
