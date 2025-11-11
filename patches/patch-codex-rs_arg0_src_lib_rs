@@ -42,15 +42,16 @@ Index: codex-rs/arg0/src/lib.rs
              None
          }
      };
-@@ -94,7 +109,7 @@
-     let runtime = tokio::runtime::Runtime::new()?;
-     runtime.block_on(async move {
-         let codex_linux_sandbox_exe: Option<PathBuf> = if cfg!(target_os = "linux") {
+@@ -94,12 +109,10 @@
+    let runtime = tokio::runtime::Runtime::new()?;
+    runtime.block_on(async move {
+-        let codex_linux_sandbox_exe: Option<PathBuf> = if cfg!(target_os = "linux") {
 -            std::env::current_exe().ok()
-+            self_exe.clone()
-         } else {
-             None
-         };
+-        } else {
+-            None
+-        };
++        let codex_linux_sandbox_exe = self_exe.clone();
++
 @@ -144,17 +159,15 @@
  ///
  /// IMPORTANT: This function modifies the PATH environment variable, so it MUST
