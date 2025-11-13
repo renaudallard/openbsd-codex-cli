@@ -3,7 +3,7 @@ COMMENT =	lightweight coding agent that runs in your terminal
 # Upstream tag for Rust sources:
 GH_ACCOUNT =	openai
 GH_PROJECT =	codex
-GH_TAGNAME =	rust-v0.55.0
+GH_TAGNAME =	rust-v0.57.0
 PKGNAME =	codex-${GH_TAGNAME:S/rust-v//}
 
 CATEGORIES =	devel
@@ -54,10 +54,11 @@ do-install:
 	> ${PREFIX}/share/examples/codex/config.toml
 
 # Those aren"t updated with modcargo-gen-crates
+MODCARGO_CRATES +=	convert_case 0.7.1  # MIT
 MODCARGO_CRATES +=	crossterm 0.28.1  # MIT
 MODCARGO_CRATES +=	ratatui	0.29.0	# MIT
-#dependency for ratatui 0.29.0 as pinned unicode version is wrong
-MODCARGO_CRATES +=	unicode-width	0.2.0	# MIT
+MODCARGO_CRATES +=	rmcp	0.8.5	# MIT
+MODCARGO_CRATES +=	rmcp-macros	0.8.5	# MIT
 
 .include "crates.inc"
 .include <bsd.port.mk>

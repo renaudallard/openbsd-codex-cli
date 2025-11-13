@@ -1,21 +1,38 @@
 Index: codex-rs/tui/src/terminal_palette.rs
---- codex-rs/tui/src/terminal_palette.rs.orig
-+++ codex-rs/tui/src/terminal_palette.rs
-@@ -47,7 +47,7 @@ pub fn default_bg() -> Option<(u8, u8, u8)> {
-     default_colors().map(|c| c.bg)
- }
-
--#[cfg(all(unix, not(test)))]
-+#[cfg(all(unix, not(test), not(target_os = "openbsd")))]
+--- codex-rs/tui/src/terminal_palette.rs.orig	Thu Nov 13 16:18:37 2025
++++ codex-rs/tui/src/terminal_palette.rs	Thu Nov 13 16:20:23 2025
+@@ -50,9 +50,9 @@
+ #[cfg(all(unix, not(test)))]
  mod imp {
      use super::DefaultColors;
-     use crossterm::style::Color as CrosstermColor;
-@@ -121,7 +121,7 @@ mod imp {
+-    use crossterm::style::Color as CrosstermColor;
+-    use crossterm::style::query_background_color;
+-    use crossterm::style::query_foreground_color;
++    // use crossterm::style::Color as CrosstermColor; // Disabled for OpenBSD compatibility
++    // use crossterm::style::query_background_color; // Disabled for OpenBSD compatibility
++    // use crossterm::style::query_foreground_color; // Disabled for OpenBSD compatibility
+     use std::sync::Mutex;
+     use std::sync::OnceLock;
+ 
+@@ -108,17 +108,16 @@
      }
+ 
+     fn query_default_colors() -> std::io::Result<Option<DefaultColors>> {
+-        let fg = query_foreground_color()?.and_then(color_to_tuple);
+-        let bg = query_background_color()?.and_then(color_to_tuple);
+-        Ok(fg.zip(bg).map(|(fg, bg)| DefaultColors { fg, bg }))
++        // Disabled for OpenBSD: crossterm 0.28.1 does not have query_*_color functions
++        Ok(None)
+     }
+ 
+-    fn color_to_tuple(color: CrosstermColor) -> Option<(u8, u8, u8)> {
++    /*fn color_to_tuple(color: CrosstermColor) -> Option<(u8, u8, u8)> {
+         match color {
+             CrosstermColor::Rgb { r, g, b } => Some((r, g, b)),
+             _ => None,
+         }
+-    }
++    }*/
  }
-
--#[cfg(not(all(unix, not(test))))]
-+#[cfg(any(not(all(unix, not(test))), target_os = "openbsd"))]
- mod imp {
-     use super::DefaultColors;
-
+ 
+ #[cfg(not(all(unix, not(test))))]

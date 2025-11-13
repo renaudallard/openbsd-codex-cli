@@ -87,6 +87,7 @@ SHA256 (cargo/compact_str-0.8.1.tar.gz) = O3nEBpxsrXji4M38vSYnV3Bmn7Of0winUtwRDo
 SHA256 (cargo/concurrent-queue-2.5.0.tar.gz) = TKAZeu4m0a43RF7lMv785DJR0kzHwWZ5n01GgX8dOXM=
 SHA256 (cargo/console-0.15.11.tar.gz) = BUzLWxD58sv1HrNVyh0FwtJ5zhgEaI0Nt0tHM6Wur9g=
 SHA256 (cargo/convert_case-0.6.0.tar.gz) = 7BgrDKLzXY/Bls80BJiP2LjHOaTScP8RijmP6wy+wco=
+SHA256 (cargo/convert_case-0.7.1.tar.gz) = u0ArjUyFVpQQQlZQzj7dx9aY7ZbTmnP5QbCPtjCC8ec=
 SHA256 (cargo/core-foundation-0.10.1.tar.gz) = sqbNmuIz5/YrpOk1PoGojff8ilmHuNRFtNkMh5vRVvY=
 SHA256 (cargo/core-foundation-0.9.4.tar.gz) = keGV4JGpPEb3EC7HgYoqo5Th4XccOrSCWWP6A+Ra+48=
 SHA256 (cargo/core-foundation-sys-0.8.7.tar.gz) = dzZIuU0OXWIPZPKAd3RFdA5h/nAQJQh+yLV/RceRiIs=
@@ -416,7 +417,9 @@ SHA256 (cargo/regex-syntax-0.8.5.tar.gz) = KxXEMYa+Z6T9Y77lDQMDr//O84FJLr4sXYfzJ
 SHA256 (cargo/reqwest-0.12.23.tar.gz) = 1CnzTICSstQsfJPOwyO7St63xnaY9wg5reyELsEMfOs=
 SHA256 (cargo/ring-0.17.14.tar.gz) = pGiebCKU2B6I3GJhx2i2O8T824Ur5tE1JJixFPYTg7c=
 SHA256 (cargo/rmcp-0.8.3.tar.gz) = H9rRJY9yWf3A8t/CZpOcgsO10f1yvN4nTWAM3CfmAkM=
+SHA256 (cargo/rmcp-0.8.5.tar.gz) = 5ZR2iBYLVvtsgn48IKcskDkqHX6d7HR0kZeqF4CsQso=
 SHA256 (cargo/rmcp-macros-0.8.3.tar.gz) = 7eBYmiCMx86B0b5oqn50uRf80DyBUoQIurBFfhh9zZs=
+SHA256 (cargo/rmcp-macros-0.8.5.tar.gz) = ASY0QdP4Y1xijjOFbEaLluu84a8tNpnqcSynFDLU7no=
 SHA256 (cargo/rustc-demangle-0.1.25.tar.gz) = mJ5nOfgMStWxPg/X/olTEYA3WxhSDMjIIIDk3EA1uE8=
 SHA256 (cargo/rustc-hash-1.1.0.tar.gz) = CNQ/eqawjUnzgs3mp5ggR8NCbblJsUJLxLfsmuEsbOI=
 SHA256 (cargo/rustc-hash-2.1.1.tar.gz) = NXcD1BNltLJ8WQ4+2R6rsbZj8HxMCECV5gy+1DYt/w0=
@@ -580,7 +583,6 @@ SHA256 (cargo/unicode-linebreak-0.1.5.tar.gz) = OwnIPDwp03UGo+JgwIwDdDprtmqc1DLG
 SHA256 (cargo/unicode-segmentation-1.12.0.tar.gz) = 9szyUSEhFLVEM+yUn9anhBJ1+a2iDd3S8p6c7qRQFJM=
 SHA256 (cargo/unicode-truncate-1.1.0.tar.gz) = s2RGJ6WvX6MhyVubI1py/STNKcZIwsN5Qx5mKGVWJ78=
 SHA256 (cargo/unicode-width-0.1.14.tar.gz) = fdbjDpC6pvckEXIGZdQdibmj0DncRbj66h3dB/YX9q8=
-SHA256 (cargo/unicode-width-0.2.0.tar.gz) = H8gZVoQsV9rBFCKpfDuBlaH/cn8G6FyE7S6KonfJoP0=
 SHA256 (cargo/unicode-width-0.2.1.tar.gz) = ShoHzH2zgQgzKE6NNyzNxtopdBY57McMnsEH3w+mFUw=
 SHA256 (cargo/unicode-xid-0.2.6.tar.gz) = 68HATHFRDH9wK1K3w1BzTJ/xKVxGSgMzWwC7hPxU+FM=
 SHA256 (cargo/untrusted-0.9.0.tar.gz) = jsttoouKNR13O2jVglrDkBfmgHUPmA86GoXNjdKKR8E=
@@ -699,7 +701,7 @@ SHA256 (cargo/zune-jpeg-0.4.19.tar.gz) = LJ5SWvCmpljgMelfFLf4iZdrdKEboOylpfyayKH
 SHA256 (cargo/zvariant-4.2.0.tar.gz) = IIQpCrmhxHHDj8UklFg3c0+/EkSH4QXa7Cu1f9SMgf4=
 SHA256 (cargo/zvariant_derive-4.2.0.tar.gz) = c+K6VGvaaDqQZSusSiebwUatrROG8lN5z3MgDSACxEk=
 SHA256 (cargo/zvariant_utils-2.1.0.tar.gz) = xRvP98w9u1BVOWvPd0dIw9q0JrS4ZZBGljUjzuSAg0A=
-SHA256 (codex-rust-v0.55.0.tar.gz) = 0OHKxrauxWoJlrwcDk/+fP7STdkZBRzec444xi8/aYo=
+SHA256 (codex-rust-v0.57.0.tar.gz) = LwJoQG34wIqrGbrJS2R5YWemh0hbmuuuF24aPSNKv58=
 SIZE (cargo/Inflector-0.11.4.tar.gz) = 17438
 SIZE (cargo/addr2line-0.24.2.tar.gz) = 39015
 SIZE (cargo/adler2-2.0.1.tar.gz) = 13366
@@ -789,6 +791,7 @@ SIZE (cargo/compact_str-0.8.1.tar.gz) = 71371
 SIZE (cargo/concurrent-queue-2.5.0.tar.gz) = 22654
 SIZE (cargo/console-0.15.11.tar.gz) = 37822
 SIZE (cargo/convert_case-0.6.0.tar.gz) = 18675
+SIZE (cargo/convert_case-0.7.1.tar.gz) = 23816
 SIZE (cargo/core-foundation-0.10.1.tar.gz) = 28886
 SIZE (cargo/core-foundation-0.9.4.tar.gz) = 27743
 SIZE (cargo/core-foundation-sys-0.8.7.tar.gz) = 37712
@@ -1118,7 +1121,9 @@ SIZE (cargo/regex-syntax-0.8.5.tar.gz) = 357541
 SIZE (cargo/reqwest-0.12.23.tar.gz) = 161307
 SIZE (cargo/ring-0.17.14.tar.gz) = 1502610
 SIZE (cargo/rmcp-0.8.3.tar.gz) = 195918
+SIZE (cargo/rmcp-0.8.5.tar.gz) = 195842
 SIZE (cargo/rmcp-macros-0.8.3.tar.gz) = 13419
+SIZE (cargo/rmcp-macros-0.8.5.tar.gz) = 13454
 SIZE (cargo/rustc-demangle-0.1.25.tar.gz) = 29590
 SIZE (cargo/rustc-hash-1.1.0.tar.gz) = 9331
 SIZE (cargo/rustc-hash-2.1.1.tar.gz) = 14154
@@ -1282,7 +1287,6 @@ SIZE (cargo/unicode-linebreak-0.1.5.tar.gz) = 15324
 SIZE (cargo/unicode-segmentation-1.12.0.tar.gz) = 106323
 SIZE (cargo/unicode-truncate-1.1.0.tar.gz) = 12529
 SIZE (cargo/unicode-width-0.1.14.tar.gz) = 271615
-SIZE (cargo/unicode-width-0.2.0.tar.gz) = 271509
 SIZE (cargo/unicode-width-0.2.1.tar.gz) = 279344
 SIZE (cargo/unicode-xid-0.2.6.tar.gz) = 15744
 SIZE (cargo/untrusted-0.9.0.tar.gz) = 14447
@@ -1401,4 +1405,4 @@ SIZE (cargo/zune-jpeg-0.4.19.tar.gz) = 66341
 SIZE (cargo/zvariant-4.2.0.tar.gz) = 82180
 SIZE (cargo/zvariant_derive-4.2.0.tar.gz) = 11057
 SIZE (cargo/zvariant_utils-2.1.0.tar.gz) = 7043
-SIZE (codex-rust-v0.55.0.tar.gz) = 27885307
+SIZE (codex-rust-v0.57.0.tar.gz) = 27920733
