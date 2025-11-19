@@ -1,7 +1,7 @@
 Index: codex-rs/tui/src/terminal_palette.rs
---- codex-rs/tui/src/terminal_palette.rs.orig	Thu Nov 13 16:18:37 2025
-+++ codex-rs/tui/src/terminal_palette.rs	Thu Nov 13 16:20:23 2025
-@@ -50,9 +50,9 @@
+--- codex-rs/tui/src/terminal_palette.rs.orig
++++ codex-rs/tui/src/terminal_palette.rs
+@@ -49,9 +49,9 @@
  #[cfg(all(unix, not(test)))]
  mod imp {
      use super::DefaultColors;
@@ -14,25 +14,28 @@ Index: codex-rs/tui/src/terminal_palette.rs
      use std::sync::Mutex;
      use std::sync::OnceLock;
  
-@@ -108,17 +108,16 @@
+@@ -107,15 +107,14 @@ mod imp {
+         }
      }
  
      fn query_default_colors() -> std::io::Result<Option<DefaultColors>> {
 -        let fg = query_foreground_color()?.and_then(color_to_tuple);
 -        let bg = query_background_color()?.and_then(color_to_tuple);
 -        Ok(fg.zip(bg).map(|(fg, bg)| DefaultColors { fg, bg }))
-+        // Disabled for OpenBSD: crossterm 0.28.1 does not have query_*_color functions
++        // Disabled for OpenBSD: the vendored crossterm version does not provide query_*_color
 +        Ok(None)
      }
  
 -    fn color_to_tuple(color: CrosstermColor) -> Option<(u8, u8, u8)> {
-+    /*fn color_to_tuple(color: CrosstermColor) -> Option<(u8, u8, u8)> {
-         match color {
-             CrosstermColor::Rgb { r, g, b } => Some((r, g, b)),
-             _ => None,
-         }
+-        match color {
+-            CrosstermColor::Rgb { r, g, b } => Some((r, g, b)),
+-            _ => None,
+-        }
 -    }
++    /*fn color_to_tuple(color: CrosstermColor) -> Option<(u8, u8, u8)> {
++        match color {
++            CrosstermColor::Rgb { r, g, b } => Some((r, g, b)),
++            _ => None,
++        }
 +    }*/
  }
- 
- #[cfg(not(all(unix, not(test))))]

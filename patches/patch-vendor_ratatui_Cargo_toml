@@ -3,10 +3,10 @@ Index: codex-rs/vendor/ratatui/Cargo.toml
 +++ codex-rs/vendor/ratatui/Cargo.toml
 @@ -415,7 +415,7 @@
  version = "1"
-
+ 
  [dependencies.unicode-width]
 -version = "=0.2.0"
 +version = "=0.2.1"
-
+ 
  [dev-dependencies.argh]
  version = "0.1.12"

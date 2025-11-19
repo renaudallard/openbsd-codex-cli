@@ -1,44 +1,74 @@
 Index: codex-rs/arg0/src/lib.rs
---- codex-rs/arg0/src/lib.rs.orig	Thu Nov 13 11:59:48 2025
-+++ codex-rs/arg0/src/lib.rs	Thu Nov 13 14:31:52 2025
-@@ -76,10 +76,13 @@
+--- codex-rs/arg0/src/lib.rs.orig
++++ codex-rs/arg0/src/lib.rs
+@@ -1,6 +1,7 @@
+ use std::future::Future;
+ use std::path::Path;
+ use std::path::PathBuf;
++use std::sync::OnceLock;
+ 
+ use codex_core::CODEX_APPLY_PATCH_ARG1;
+ #[cfg(unix)]
+@@ -11,6 +12,8 @@
+ const APPLY_PATCH_ARG0: &str = "apply_patch";
+ const MISSPELLED_APPLY_PATCH_ARG0: &str = "applypatch";
+ 
++static SELF_EXE: OnceLock<PathBuf> = OnceLock::new();
++
+ pub fn arg0_dispatch() -> Option<TempDir> {
+     // Determine if we were invoked via the special alias.
+     let mut args = std::env::args_os();
+@@ -51,7 +54,20 @@
      // before creating any threads/the Tokio runtime.
      load_dotenv();
  
-+    // Resolve the executable path from argv0
-+    let self_exe = resolve_self_exe(&argv0)?;
+-    match prepend_path_entry_for_codex_aliases() {
++    let self_exe = match resolve_self_exe(&argv0) {
++        Ok(path) => {
++            let _ = SELF_EXE.set(path.clone());
++            path
++        }
++        Err(err) => {
++            eprintln!(
++                "WARNING: proceeding, even though we could not determine executable path: {err}"
++            );
++            return None;
++        }
++    };
 +
-     // Retain the TempDir so it exists for the lifetime of the invocation of
-     // this executable. Admittedly, we could invoke `keep()` on it, but it
-     // would be nice to avoid leaving temporary directories behind, if possible.
--    let _path_entry = match prepend_path_entry_for_apply_patch() {
-+    let _path_entry = match prepend_path_entry_for_apply_patch(&self_exe) {
++    match prepend_path_entry_for_codex_aliases(&self_exe) {
          Ok(path_entry) => Some(path_entry),
          Err(err) => {
              // It is possible that Codex will proceed successfully even if
-@@ -93,11 +96,7 @@
+@@ -92,13 +108,14 @@
+     // this executable. Admittedly, we could invoke `keep()` on it, but it
+     // would be nice to avoid leaving temporary directories behind, if possible.
+     let _path_entry = arg0_dispatch();
++    let cached_self_exe = SELF_EXE.get().cloned();
+ 
+     // Regular invocation – create a Tokio runtime and execute the provided
      // async entry-point.
      let runtime = tokio::runtime::Runtime::new()?;
      runtime.block_on(async move {
--        let codex_linux_sandbox_exe: Option<PathBuf> = if cfg!(target_os = "linux") {
+         let codex_linux_sandbox_exe: Option<PathBuf> = if cfg!(target_os = "linux") {
 -            std::env::current_exe().ok()
--        } else {
--            None
--        };
-+        let codex_linux_sandbox_exe = Some(self_exe.clone());
- 
-         main_fn(codex_linux_sandbox_exe).await
-     })
-@@ -144,17 +143,15 @@
++            cached_self_exe.clone().or_else(|| std::env::current_exe().ok())
+         } else {
+             None
+         };
+@@ -148,7 +165,7 @@
  ///
  /// IMPORTANT: This function modifies the PATH environment variable, so it MUST
  /// be called before multiple threads are spawned.
--fn prepend_path_entry_for_apply_patch() -> std::io::Result<TempDir> {
-+fn prepend_path_entry_for_apply_patch(exe: &Path) -> std::io::Result<TempDir> {
+-pub fn prepend_path_entry_for_codex_aliases() -> std::io::Result<TempDir> {
++pub fn prepend_path_entry_for_codex_aliases(exe: &Path) -> std::io::Result<TempDir> {
      let temp_dir = TempDir::new()?;
      let path = temp_dir.path();
  
-     for filename in &[APPLY_PATCH_ARG0, MISSPELLED_APPLY_PATCH_ARG0] {
+@@ -158,12 +175,10 @@
+         #[cfg(target_os = "linux")]
+         LINUX_SANDBOX_ARG0,
+     ] {
 -        let exe = std::env::current_exe()?;
 -
          #[cfg(unix)]
@@ -49,13 +79,11 @@ Index: codex-rs/arg0/src/lib.rs
          }
  
          #[cfg(windows)]
-@@ -193,4 +190,73 @@
+@@ -202,4 +217,71 @@
      }
  
      Ok(temp_dir)
 +}
-+
-+
 +fn resolve_self_exe(argv0: &std::ffi::OsStr) -> std::io::Result<PathBuf> {
 +    #[cfg(unix)]
 +    {

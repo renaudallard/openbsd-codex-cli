@@ -3,7 +3,7 @@ COMMENT =	lightweight coding agent that runs in your terminal
 # Upstream tag for Rust sources:
 GH_ACCOUNT =	openai
 GH_PROJECT =	codex
-GH_TAGNAME =	rust-v0.57.0
+GH_TAGNAME =	rust-v0.58.0
 PKGNAME =	codex-${GH_TAGNAME:S/rust-v//}
 
 CATEGORIES =	devel

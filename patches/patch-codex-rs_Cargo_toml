@@ -1,14 +1,14 @@
 Index: codex-rs/Cargo.toml
---- codex-rs/Cargo.toml.orig	Wed Nov 12 16:08:47 2025
-+++ codex-rs/Cargo.toml	Wed Nov 12 16:11:34 2025
+--- codex-rs/Cargo.toml.orig
++++ codex-rs/Cargo.toml
 @@ -280,8 +280,8 @@
  [patch.crates-io]
  # Uncomment to debug local changes.
  # ratatui = { path = "../../ratatui" }
--ratatui = { git = "https://github.com/nornagon/ratatui", branch = "nornagon-v0.29.0-patch" }
 -crossterm = { git = "https://github.com/nornagon/crossterm", branch = "nornagon/color-query" }
-+# ratatui = { git = "https://github.com/nornagon/ratatui", branch = "nornagon-v0.29.0-patch" }  # Commented out for OpenBSD ports offline build
+-ratatui = { git = "https://github.com/nornagon/ratatui", branch = "nornagon-v0.29.0-patch" }
 +# crossterm = { git = "https://github.com/nornagon/crossterm", branch = "nornagon/color-query" }  # Commented out for OpenBSD ports offline build
++# ratatui = { git = "https://github.com/nornagon/ratatui", branch = "nornagon-v0.29.0-patch" }  # Commented out for OpenBSD ports offline build
  
  # Uncomment to debug local changes.
  # rmcp = { path = "../../rust-sdk/crates/rmcp" }
