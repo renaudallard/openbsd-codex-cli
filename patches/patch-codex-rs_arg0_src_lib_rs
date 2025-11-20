@@ -9,16 +9,18 @@ Index: codex-rs/arg0/src/lib.rs
  
  use codex_core::CODEX_APPLY_PATCH_ARG1;
  #[cfg(unix)]
-@@ -11,6 +12,8 @@
+@@ -10,7 +11,10 @@
+ const LINUX_SANDBOX_ARG0: &str = "codex-linux-sandbox";
  const APPLY_PATCH_ARG0: &str = "apply_patch";
  const MISSPELLED_APPLY_PATCH_ARG0: &str = "applypatch";
++const CODEX_SELF_EXE_ENV_VAR: &str = "CODEX_SELF_EXE";
  
 +static SELF_EXE: OnceLock<PathBuf> = OnceLock::new();
 +
  pub fn arg0_dispatch() -> Option<TempDir> {
      // Determine if we were invoked via the special alias.
      let mut args = std::env::args_os();
-@@ -51,7 +54,20 @@
+@@ -51,7 +55,23 @@
      // before creating any threads/the Tokio runtime.
      load_dotenv();
  
@@ -26,6 +28,9 @@ Index: codex-rs/arg0/src/lib.rs
 +    let self_exe = match resolve_self_exe(&argv0) {
 +        Ok(path) => {
 +            let _ = SELF_EXE.set(path.clone());
++            unsafe {
++                std::env::set_var(CODEX_SELF_EXE_ENV_VAR, &path);
++            }
 +            path
 +        }
 +        Err(err) => {
@@ -40,7 +45,7 @@ Index: codex-rs/arg0/src/lib.rs
          Ok(path_entry) => Some(path_entry),
          Err(err) => {
              // It is possible that Codex will proceed successfully even if
-@@ -92,13 +108,14 @@
+@@ -92,16 +112,20 @@
      // this executable. Admittedly, we could invoke `keep()` on it, but it
      // would be nice to avoid leaving temporary directories behind, if possible.
      let _path_entry = arg0_dispatch();
@@ -50,13 +55,23 @@ Index: codex-rs/arg0/src/lib.rs
      // async entry-point.
      let runtime = tokio::runtime::Runtime::new()?;
      runtime.block_on(async move {
-         let codex_linux_sandbox_exe: Option<PathBuf> = if cfg!(target_os = "linux") {
+-        let codex_linux_sandbox_exe: Option<PathBuf> = if cfg!(target_os = "linux") {
 -            std::env::current_exe().ok()
-+            cached_self_exe.clone().or_else(|| std::env::current_exe().ok())
-         } else {
-             None
-         };
-@@ -148,7 +165,7 @@
+-        } else {
+-            None
+-        };
++        let codex_linux_sandbox_exe: Option<PathBuf> =
++            if cfg!(target_os = "linux") {
++                cached_self_exe
++                    .clone()
++                    .or_else(|| std::env::current_exe().ok())
++            } else {
++                None
++            };
+ 
+         main_fn(codex_linux_sandbox_exe).await
+     })
+@@ -148,7 +172,7 @@
  ///
  /// IMPORTANT: This function modifies the PATH environment variable, so it MUST
  /// be called before multiple threads are spawned.
@@ -65,7 +80,7 @@ Index: codex-rs/arg0/src/lib.rs
      let temp_dir = TempDir::new()?;
      let path = temp_dir.path();
  
-@@ -158,12 +175,10 @@
+@@ -158,12 +182,10 @@
          #[cfg(target_os = "linux")]
          LINUX_SANDBOX_ARG0,
      ] {
@@ -79,11 +94,11 @@ Index: codex-rs/arg0/src/lib.rs
          }
  
          #[cfg(windows)]
-@@ -202,4 +217,71 @@
-     }
+@@ -203,3 +225,75 @@
  
      Ok(temp_dir)
-+}
+ }
++
 +fn resolve_self_exe(argv0: &std::ffi::OsStr) -> std::io::Result<PathBuf> {
 +    #[cfg(unix)]
 +    {
@@ -138,7 +153,10 @@ Index: codex-rs/arg0/src/lib.rs
 +
 +    Err(Error::new(
 +        ErrorKind::NotFound,
-+        format!("failed to locate '{}' on PATH; cannot determine executable path", candidate.display()),
++        format!(
++            "failed to locate '{}' on PATH; cannot determine executable path",
++            candidate.display()
++        ),
 +    ))
 +}
 +
@@ -150,4 +168,5 @@ Index: codex-rs/arg0/src/lib.rs
 +        Ok(metadata) => metadata.is_file() && metadata.permissions().mode() & 0o111 != 0,
 +        Err(_) => false,
 +    }
- }
++}
++

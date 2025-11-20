@@ -1,0 +1,32 @@
+Index: codex-rs/core/src/tools/runtimes/apply_patch.rs
+--- codex-rs/core/src/tools/runtimes/apply_patch.rs.orig
++++ codex-rs/core/src/tools/runtimes/apply_patch.rs
+@@ -25,6 +25,8 @@
+ use std::collections::HashMap;
+ use std::path::PathBuf;
+ 
++const CODEX_SELF_EXE_ENV_VAR: &str = "CODEX_SELF_EXE";
++
+ #[derive(Clone, Debug)]
+ pub struct ApplyPatchRequest {
+     pub patch: String,
+@@ -58,6 +60,8 @@
+         use std::env;
+         let exe = if let Some(path) = &req.codex_exe {
+             path.clone()
++        } else if let Some(path) = codex_self_exe_from_env() {
++            path
+         } else {
+             env::current_exe()
+                 .map_err(|e| ToolError::Rejected(format!("failed to determine codex exe: {e}")))?
+@@ -160,4 +164,10 @@
+             .map_err(ToolError::Codex)?;
+         Ok(out)
+     }
++}
++
++fn codex_self_exe_from_env() -> Option<PathBuf> {
++    std::env::var_os(CODEX_SELF_EXE_ENV_VAR)
++        .filter(|value| !value.is_empty())
++        .map(PathBuf::from)
+ }
