@@ -3,7 +3,7 @@ COMMENT =	lightweight coding agent that runs in your terminal
 # Upstream tag for Rust sources:
 GH_ACCOUNT =	openai
 GH_PROJECT =	codex
-GH_TAGNAME =	rust-v0.58.0
+GH_TAGNAME =	rust-v0.60.1
 PKGNAME =	codex-${GH_TAGNAME:S/rust-v//}
 
 CATEGORIES =	devel
@@ -59,6 +59,10 @@ MODCARGO_CRATES +=	crossterm 0.28.1  # MIT
 MODCARGO_CRATES +=	ratatui	0.29.0	# MIT
 MODCARGO_CRATES +=	rmcp	0.8.5	# MIT
 MODCARGO_CRATES +=	rmcp-macros	0.8.5	# MIT
+MODCARGO_CRATES +=	test-case	3.3.1	# MIT
+MODCARGO_CRATES +=	test-case-core	3.3.1	# MIT
+MODCARGO_CRATES +=	test-case-macros	3.3.1	# MIT
+MODCARGO_CRATES +=	tiktoken-rs	0.9.1	# MIT
 
 .include "crates.inc"
 .include <bsd.port.mk>

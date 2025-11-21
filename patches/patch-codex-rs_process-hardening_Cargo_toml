@@ -1,9 +1,9 @@
 Index: codex-rs/process-hardening/Cargo.toml
 --- codex-rs/process-hardening/Cargo.toml.orig
 +++ codex-rs/process-hardening/Cargo.toml
-@@ -19,3 +19,6 @@ libc = { workspace = true }
+@@ -13,3 +13,6 @@ workspace = true
 
- [target.'cfg(target_os = "macos")'.dependencies]
+ [dependencies]
  libc = { workspace = true }
 +
 +[target.'cfg(target_os = "openbsd")'.dependencies]

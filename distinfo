@@ -519,6 +519,9 @@ SHA256 (cargo/term-0.7.0.tar.gz) = xZ34rJXZb/m+3hjrcwCw/aXl2NkJYOdvjhSudl7tvx8=
 SHA256 (cargo/termcolor-1.4.1.tar.gz) = BnlPj2xciYsyda6++muKHLJM0sbHk5erFXdIN6C8V1U=
 SHA256 (cargo/terminal_size-0.4.2.tar.gz) = RcZIHEgp5Mxjgl5ixJGGo0U4t7J1C3OyZlgf+2Evte0=
 SHA256 (cargo/termtree-0.5.1.tar.gz) = j1D+vsg/XuHfMBU0HYvUKfLRzGK8un6iB2dZ0xUIRoM=
+SHA256 (cargo/test-case-3.3.1.tar.gz) = 6yVQ3ROvzShoUxkq+GAZINlZsUxAH87OOAcdU78HaKg=
+SHA256 (cargo/test-case-core-3.3.1.tar.gz) = rct/2EHNUY4nm+PVo+sGNkCUh5mKSv8i896HuB6IOE8=
+SHA256 (cargo/test-case-macros-3.3.1.tar.gz) = XInnKgHtTFeWaa3VkBS5pSTWCcDIjGpYXON0hYefb/s=
 SHA256 (cargo/test-log-0.2.18.tar.gz) = HjO5ilguoL4RaOugl1OO6N1Lvg8rAbIqyS6jAFTlvns=
 SHA256 (cargo/test-log-macros-0.2.18.tar.gz) = RRs3RSmTDXYBse740yvHmuhwtgebBpQBcJwqi/nnXzY=
 SHA256 (cargo/textwrap-0.11.0.tar.gz) = 0yZhD0CMek629Rw3wzDklrCFBslFfJ00KH7MOICfsGA=
@@ -530,6 +533,7 @@ SHA256 (cargo/thiserror-impl-2.0.17.tar.gz) = P/Fcjs1944SdtjLhTRjSVx+gnfxe2TR5vE
 SHA256 (cargo/thread_local-1.1.9.tar.gz) = 9gJGpJRPJPbgGKoXze/7eBi3Y1aWXQOwfWqYhuiWIYU=
 SHA256 (cargo/tiff-0.10.3.tar.gz) = r5YF3n/ujZVRhj/WksznY39Ujb2duRgPzAfMxtJsM28=
 SHA256 (cargo/tiktoken-rs-0.7.0.tar.gz) = JVY+66kE13Cs9Sfos3D+mlVHus0g/4SgtsO8QSiOViU=
+SHA256 (cargo/tiktoken-rs-0.9.1.tar.gz) = OhmDB0fZA0zZ2kOmDqqOVS39p3EkJK6/GHt6YBJrrg0=
 SHA256 (cargo/time-0.3.44.tar.gz) = kefZ47thE053veIN1IJbl8AQFVcJll/t8PSbsTjlKp0=
 SHA256 (cargo/time-core-0.1.6.tar.gz) = QIaOfB0vC41z5KjH8P9jr09tGb4RfpC9c+sdYs+DHGs=
 SHA256 (cargo/time-macros-0.2.24.tar.gz) = MM+wEl8S2cJ381ZjoKM/jDAZD05FdIaKMwWVQS006/M=
@@ -706,7 +710,7 @@ SHA256 (cargo/zune-jpeg-0.4.19.tar.gz) = LJ5SWvCmpljgMelfFLf4iZdrdKEboOylpfyayKH
 SHA256 (cargo/zvariant-4.2.0.tar.gz) = IIQpCrmhxHHDj8UklFg3c0+/EkSH4QXa7Cu1f9SMgf4=
 SHA256 (cargo/zvariant_derive-4.2.0.tar.gz) = c+K6VGvaaDqQZSusSiebwUatrROG8lN5z3MgDSACxEk=
 SHA256 (cargo/zvariant_utils-2.1.0.tar.gz) = xRvP98w9u1BVOWvPd0dIw9q0JrS4ZZBGljUjzuSAg0A=
-SHA256 (codex-rust-v0.58.0.tar.gz) = kD8M7DD4EjTwl5boMmC1YENsI0EIXcQXZA4/2Wr5v7I=
+SHA256 (codex-rust-v0.60.1.tar.gz) = iCxGNB0xE5rt5MT7Pldzz1qDw0WQuVvzpbKRKqhVIcQ=
 SIZE (cargo/Inflector-0.11.4.tar.gz) = 17438
 SIZE (cargo/addr2line-0.24.2.tar.gz) = 39015
 SIZE (cargo/adler2-2.0.1.tar.gz) = 13366
@@ -1228,6 +1232,9 @@ SIZE (cargo/term-0.7.0.tar.gz) = 37082
 SIZE (cargo/termcolor-1.4.1.tar.gz) = 18773
 SIZE (cargo/terminal_size-0.4.2.tar.gz) = 9976
 SIZE (cargo/termtree-0.5.1.tar.gz) = 8498
+SIZE (cargo/test-case-3.3.1.tar.gz) = 8797
+SIZE (cargo/test-case-core-3.3.1.tar.gz) = 14327
+SIZE (cargo/test-case-macros-3.3.1.tar.gz) = 4961
 SIZE (cargo/test-log-0.2.18.tar.gz) = 16138
 SIZE (cargo/test-log-macros-0.2.18.tar.gz) = 8947
 SIZE (cargo/textwrap-0.11.0.tar.gz) = 17322
@@ -1239,6 +1246,7 @@ SIZE (cargo/thiserror-impl-2.0.17.tar.gz) = 21344
 SIZE (cargo/thread_local-1.1.9.tar.gz) = 19315
 SIZE (cargo/tiff-0.10.3.tar.gz) = 1444592
 SIZE (cargo/tiktoken-rs-0.7.0.tar.gz) = 3792064
+SIZE (cargo/tiktoken-rs-0.9.1.tar.gz) = 3791450
 SIZE (cargo/time-0.3.44.tar.gz) = 143200
 SIZE (cargo/time-core-0.1.6.tar.gz) = 9105
 SIZE (cargo/time-macros-0.2.24.tar.gz) = 24715
@@ -1415,4 +1423,4 @@ SIZE (cargo/zune-jpeg-0.4.19.tar.gz) = 66341
 SIZE (cargo/zvariant-4.2.0.tar.gz) = 82180
 SIZE (cargo/zvariant_derive-4.2.0.tar.gz) = 11057
 SIZE (cargo/zvariant_utils-2.1.0.tar.gz) = 7043
-SIZE (codex-rust-v0.58.0.tar.gz) = 27952941
+SIZE (codex-rust-v0.60.1.tar.gz) = 27797395
